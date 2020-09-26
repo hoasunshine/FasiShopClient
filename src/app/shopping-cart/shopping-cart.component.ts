@@ -33,12 +33,14 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   changeQuantityMinus(id: string) {
+    window.location.reload();
 
     // @ts-ignore
     this.cartItem = this.cartService.changeQuantityMinus(id);
   }
 
   changeQuantityPlus(id: string) {
+    window.location.reload();
     // @ts-ignore
     this.cartItem = this.cartService.changeQuantityPlus(id);
   }
