@@ -35,10 +35,15 @@ export class CartService {
         this.getTotalLateUpdate = JSON.parse(localStorage.getItem('cart'));
         //@ts-ignore
         cart.quantity += this.cart1.quantity;
-        //@ts-ignore
-        cart.totalPrice = cart.productPrice * cart.quantity;
-        this.getTotalLateUpdate.push(cart);
-        localStorage.setItem('cart', JSON.stringify(this.getTotalLateUpdate));
+        if (cart.quantity <= 0) {
+          alert('So luong khong hop le !!!');
+          window.location.reload();
+        } else {
+          //@ts-ignore
+          cart.totalPrice = cart.productPrice * cart.quantity;
+          this.getTotalLateUpdate.push(cart);
+          localStorage.setItem('cart', JSON.stringify(this.getTotalLateUpdate));
+        }
       } else {
         this.getTotalLateUpdate = JSON.parse(localStorage.getItem('cart'));
         // @ts-ignore
