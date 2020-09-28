@@ -22,19 +22,45 @@
 <body>
 
 
-  <app-root></app-root>
+<app-root></app-root>
 
-  <script src="assets/js/jquery-3.3.1.min.js"></script>
-  <script src="assets/js/bootstrap.min.js"></script>
-  <script src="assets/js/jquery-ui.min.js"></script>
-  <script src="assets/js/jquery.countdown.min.js"></script>
-  <script src="assets/js/jquery.nice-select.min.js"></script>
-  <script src="assets/js/jquery.zoom.min.js"></script>
-  <script src="assets/js/jquery.dd.min.js"></script>
-  <script src="assets/js/jquery.slicknav.js"></script>
-  <script src="assets/js/owl.carousel.min.js"></script>
-  <script src="assets/js/main.js"></script>
-  <script src="assets/js/imagesloaded.pkgd.min.js"></script>
+<script src="assets/js/jquery-3.3.1.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/jquery-ui.min.js"></script>
+<script src="assets/js/jquery.countdown.min.js"></script>
+<script src="assets/js/jquery.nice-select.min.js"></script>
+<script src="assets/js/jquery.zoom.min.js"></script>
+<script src="assets/js/jquery.dd.min.js"></script>
+<script src="assets/js/jquery.slicknav.js"></script>
+<script src="assets/js/owl.carousel.min.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/imagesloaded.pkgd.min.js"></script>
+<script>
+  $(function () {
+
+    $('.dropdown > .caption').on('click', function () {
+      $(this).parent().toggleClass('open');
+    });
+
+    $('.dropdown > .list > .item').on('click', function () {
+      $('.dropdown > .list > .item').removeClass('selected');
+      $(this).addClass('selected').parent().parent().removeClass('open').children('.caption').text($(this).text());
+    });
+
+    $(document).on('keyup', function (evt) {
+      if ((evt.keyCode || evt.which) === 27) {
+        $('.dropdown').removeClass('open');
+      }
+    });
+
+    $(document).on('click', function (evt) {
+      if ($(evt.target).closest(".dropdown > .caption").length === 0) {
+        $('.dropdown').removeClass('open');
+      }
+    });
+
+  });
+</script>
 
 </body>
 </html>

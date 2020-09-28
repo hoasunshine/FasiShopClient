@@ -31,9 +31,6 @@ export class AuthenticationService {
     body = body.set('password', password);
     this.http.post(this.url, body).subscribe((item: any) => {
         this.account = item;
-        console.log(item);
-        console.log(this.url,body);
-        console.log('this is'+body);
         localStorage.setItem('currentUser', JSON.stringify(this.account));
         this.router.navigate(['/home']);
         alert('Login Success !!!');

@@ -8,6 +8,7 @@ import {CommentRating} from '../model/commentRating';
 import {Accounts} from '../model/account';
 import {Cart} from '../model/cart';
 import {CartService} from '../service/cart.service';
+import {Images} from '../model/images';
 
 @Component({
   selector: 'app-product',
@@ -42,6 +43,8 @@ export class ProductComponent implements OnInit {
 
   cart: Cart = new Cart();
 
+  listImage: Images[];
+
 
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private service: ShopService, private CartSerice: CartService) {
   }
@@ -49,9 +52,11 @@ export class ProductComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.productId = params.Id;
+      this.getListImage(this.productId);
       this.detail(this.productId);
       this.warehouseByProductId(this.productId);
       this.commentRating(this.productId);
+      this.quantity = 1;
     });
   }
 
@@ -68,7 +73,7 @@ export class ProductComponent implements OnInit {
         this.cart.totalPrice = this.productToCart.productPrice * this.quantity;
         this.cart.quantity = this.quantity;
         this.CartSerice.addToCart(this.cart);
-        this.router.navigate(['/shopping-cart'])
+        this.router.navigate(['/shopping-cart']);
       } else {
 
         // localStorage.setItem('cart', JSON.stringify(this.listCart));
@@ -76,6 +81,13 @@ export class ProductComponent implements OnInit {
     });
 
 
+  }
+
+  getListImage(id: string) {
+    this.service.getListImageByProductId(id).subscribe((items: any[]) => {
+      //@ts-ignore
+      this.listImage = items.imageDTOS;
+    });
   }
 
   detail(id: string) {
@@ -100,37 +112,28 @@ export class ProductComponent implements OnInit {
   }
 
 
+  changeQuantityMinus() {
+    // window.location.reload();
+
+    // @ts-ignore
+    this.quantity -= 1;
+
+  }
+
+  changeQuantityPlus() {
+    // window.location.reload();
+    // @ts-ignore
+    this.quantity = this.quantity + 1;
+
+  }
+
+
   commentRating(id: string) {
     this.service.commentRating(id).subscribe((item: any[]) => {
       // @ts-ignore
       this.commentR = item.data.commentRatingDTOList;
       console.log(this.commentR);
     });
-  }
-
-  async ngAfterViewInit() {
-
-    await this.loadScript('assets/js/jquery-3.3.1.min.js');
-    await this.loadScript('assets/js/bootstrap.min.js');
-    await this.loadScript('assets/js/jquery-ui.min.js');
-    await this.loadScript('assets/js/jquery.countdown.min.js');
-    await this.loadScript('assets/js/jquery.nice-select.min.js');
-    await this.loadScript('assets/js/jquery.dd.min.js');
-    await this.loadScript('assets/js/jquery.slicknav.js');
-    await this.loadScript('assets/js/owl.carousel.min.js');
-    await this.loadScript('assets/js/jquery.zoom.min.js');
-    await this.loadScript('assets/js/main.js');
-    await this.loadScript('assets/js/imagesloaded.pkgd.min.js');
-
-  }
-
-  loadScript(scriptUrl: string) {
-    return new Promise(((resolve, reject) => {
-      const scriptElement = document.createElement('script');
-      scriptElement.src = scriptUrl;
-      scriptElement.onload = resolve;
-      document.body.appendChild(scriptElement);
-    }));
   }
 
 }
