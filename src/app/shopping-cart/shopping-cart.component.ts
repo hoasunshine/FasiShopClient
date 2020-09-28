@@ -13,7 +13,6 @@ import {Cart} from '../model/cart';
 export class ShoppingCartComponent implements OnInit {
 
   cart: Cart[];
-  total: string;
   price: [];
   id: string;
   cartItem: Cart = new Cart();
@@ -33,20 +32,21 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   changeQuantityMinus(id: string) {
-    window.location.reload();
+    // window.location.reload();
 
     // @ts-ignore
     this.cartItem = this.cartService.changeQuantityMinus(id);
   }
 
   changeQuantityPlus(id: string) {
-    window.location.reload();
+    // window.location.reload();
     // @ts-ignore
     this.cartItem = this.cartService.changeQuantityPlus(id);
   }
 
   remove(id: string) {
     this.cartService.removeItem(id);
+    alert('Are you want delete ???');
     window.location.reload();
   }
 

@@ -17,6 +17,7 @@ export class CartService {
 
   addToCart(cart: Cart) {
     this.getLocal = JSON.parse(localStorage.getItem('cart'));
+
     console.log(this.getLocal);
 
     if (this.getLocal == null) {
@@ -84,6 +85,6 @@ export class CartService {
   clearCart() {
     this.items = JSON.parse(localStorage.getItem('cart'));
     this.items = null;
-    return this.items;
+    return localStorage.setItem('cart', JSON.stringify(this.items));
   }
 }

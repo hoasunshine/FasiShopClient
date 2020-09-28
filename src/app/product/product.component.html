@@ -43,15 +43,10 @@
             </div>
             <div class="product-thumbs">
               <div class="product-thumbs-track ps-slider owl-carousel">
-                <div class="pt"
-                     data-imgbigurl="https://product.hstatic.net/200000037048/product/chuon_chuon_581814d062aa4f4199b4af90406b9d15_master.jpg">
+                <div class="pt" *ngFor="let list of listImage"><a href="{{list.url}}">
                   <img
-                    src="https://product.hstatic.net/200000037048/product/chuon_chuon_581814d062aa4f4199b4af90406b9d15_master.jpg"
-                    alt=""></div>
-                <div class="pt" data-imgbigurl="../../assets/img/product-single/product-3.jpg"><img
-                  src="../../assets/img/product-single/product-3.jpg" alt=""></div>
-                <div class="pt" data-imgbigurl="../../assets/img/product-single/product-3.jpg"><img
-                  src="../../assets/img/product-single/product-3.jpg" alt=""></div>
+                    src="{{list.url}}" alt="">
+                </a></div>
               </div>
             </div>
           </div>
@@ -107,10 +102,15 @@
 
                 <div class="quantity">
 
+                  <!--<div class="pro-qty">-->
+                  <!--<span class="dec qtybtn">-</span>-->
+                  <!--<input type="number" value="0" name="quantity" [(ngModel)]="quantity">-->
+                  <!--<span class="inc qtybtn">+</span>-->
+                  <!--</div>-->
                   <div class="pro-qty">
-                    <span class="dec qtybtn">-</span>
-                    <input type="number" value="0" name="quantity" [(ngModel)]="quantity">
-                    <span class="inc qtybtn">+</span>
+                    <span class="dec qtybtn" (click)="changeQuantityMinus()">-</span>
+                    <input name="quantity" [(ngModel)]="quantity" value="{{quantity}}">
+                    <span class="inc qtybtn" (click)="changeQuantityPlus()">+</span>
                   </div>
                   <!--<div class="pro-qty">-->
                   <!--<input type="number" name="quantity" [(ngModel)]="quantity">-->
