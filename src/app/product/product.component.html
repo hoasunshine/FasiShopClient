@@ -101,15 +101,9 @@
                 </div>
 
                 <div class="quantity">
-
-                  <!--<div class="pro-qty">-->
-                  <!--<span class="dec qtybtn">-</span>-->
-                  <!--<input type="number" value="0" name="quantity" [(ngModel)]="quantity">-->
-                  <!--<span class="inc qtybtn">+</span>-->
-                  <!--</div>-->
                   <div class="pro-qty">
                     <span class="dec qtybtn" (click)="changeQuantityMinus()">-</span>
-                    <input name="quantity" [(ngModel)]="quantity" value="{{quantity}}">
+                    <input value="1">
                     <span class="inc qtybtn" (click)="changeQuantityPlus()">+</span>
                   </div>
                   <!--<div class="pro-qty">-->

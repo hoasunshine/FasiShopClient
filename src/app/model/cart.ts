@@ -1,5 +1,4 @@
 export class Cart {
-
   productId: string;
   image: string;
   productName: string;
