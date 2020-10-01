@@ -1,6 +1,9 @@
+// @ts-ignore
 import {Component, OnInit} from '@angular/core';
 import {ShopService} from '../service/shop.service';
+// @ts-ignore
 import {HttpClient} from '@angular/common/http';
+// @ts-ignore
 import {ActivatedRoute, Router} from '@angular/router';
 import {Product} from '../model/product';
 import {Warehouse} from '../model/warehouse';
@@ -10,6 +13,7 @@ import {Cart} from '../model/cart';
 import {CartService} from '../service/cart.service';
 import {Images} from '../model/images';
 
+// @ts-ignore
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
@@ -85,7 +89,7 @@ export class ProductComponent implements OnInit {
 
   getListImage(id: string) {
     this.service.getListImageByProductId(id).subscribe((items: any[]) => {
-      //@ts-ignore
+      // @ts-ignore
       this.listImage = items.imageDTOS;
     });
   }
@@ -124,7 +128,6 @@ export class ProductComponent implements OnInit {
     // window.location.reload();
     // @ts-ignore
     this.quantity = this.quantity + 1;
-
   }
 
 
@@ -134,6 +137,29 @@ export class ProductComponent implements OnInit {
       this.commentR = item.data.commentRatingDTOList;
       console.log(this.commentR);
     });
+  }
+
+  async ngAfterViewInit() {
+    await this.loadScript('assets/js/jquery-3.3.1.min.js');
+    await this.loadScript('assets/js/bootstrap.min.js');
+    await this.loadScript('assets/js/jquery-ui.min.js');
+    await this.loadScript('assets/js/jquery.countdown.min.js');
+    await this.loadScript('assets/js/jquery.nice-select.min.js');
+    await this.loadScript('assets/js/jquery.dd.min.js');
+    await this.loadScript('assets/js/jquery.slicknav.js');
+    await this.loadScript('assets/js/owl.carousel.min.js');
+    await this.loadScript('assets/js/jquery.zoom.min.js');
+    await this.loadScript('assets/js/main.js');
+    await this.loadScript('assets/js/imagesloaded.pkgd.min.js');
+  }
+
+  loadScript(scriptUrl: string) {
+    return new Promise(((resolve, reject) => {
+      const scriptElement = document.createElement('script');
+      scriptElement.src = scriptUrl;
+      scriptElement.onload = resolve;
+      document.body.appendChild(scriptElement);
+    }));
   }
 
 }

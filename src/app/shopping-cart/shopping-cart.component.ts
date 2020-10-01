@@ -1,10 +1,14 @@
+// @ts-ignore
 import {Component, OnInit} from '@angular/core';
+// @ts-ignore
 import {ActivatedRoute, Router} from '@angular/router';
+// @ts-ignore
 import {HttpClient} from '@angular/common/http';
-import {ShopService} from '../service/shop.service';
 import {CartService} from '../service/cart.service';
 import {Cart} from '../model/cart';
+import {log} from 'util';
 
+// @ts-ignore
 @Component({
   selector: 'app-shopping-cart',
   templateUrl: './shopping-cart.component.html',
@@ -13,21 +17,28 @@ import {Cart} from '../model/cart';
 export class ShoppingCartComponent implements OnInit {
 
   cart: Cart[];
-  price: [];
+  price: string;
   id: string;
   cartItem: Cart = new Cart();
+
 
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private cartService: CartService) {
 
   }
 
   ngOnInit(): void {
-
+    const arr = [];
     this.cart = JSON.parse(localStorage.getItem('cart'));
     // @ts-ignore
-    this.price = this.cart.totalPrice;
+    for (let i = 0; i < this.cart.length; i++) {
+      arr.push(this.cart[i].totalPrice);
+      this.price = arr.reduce((a, b) => {
+        return a + b;
+      })
+    }
+
     console.log(this.price);
-    console.log(this.cart);
+
 
   }
 
@@ -48,6 +59,30 @@ export class ShoppingCartComponent implements OnInit {
     this.cartService.removeItem(id);
     alert('Are you want delete ???');
     window.location.reload();
+  }
+
+
+  async ngAfterViewInit() {
+    await this.loadScript('assets/js/jquery-3.3.1.min.js');
+    await this.loadScript('assets/js/bootstrap.min.js');
+    await this.loadScript('assets/js/jquery-ui.min.js');
+    await this.loadScript('assets/js/jquery.countdown.min.js');
+    await this.loadScript('assets/js/jquery.nice-select.min.js');
+    await this.loadScript('assets/js/jquery.dd.min.js');
+    await this.loadScript('assets/js/jquery.slicknav.js');
+    await this.loadScript('assets/js/owl.carousel.min.js');
+    await this.loadScript('assets/js/jquery.zoom.min.js');
+    await this.loadScript('assets/js/main.js');
+    await this.loadScript('assets/js/imagesloaded.pkgd.min.js');
+  }
+
+  loadScript(scriptUrl: string) {
+    return new Promise(((resolve, reject) => {
+      const scriptElement = document.createElement('script');
+      scriptElement.src = scriptUrl;
+      scriptElement.onload = resolve;
+      document.body.appendChild(scriptElement);
+    }));
   }
 
 
