@@ -6,6 +6,7 @@ import {ShopService} from '../service/shop.service';
 import {HttpClient} from '@angular/common/http';
 // @ts-ignore
 import {ActivatedRoute} from '@angular/router';
+import {newArray} from '@angular/compiler/src/util';
 
 // @ts-ignore
 @Component({
@@ -23,8 +24,13 @@ export class ShopComponent implements OnInit {
   pageSize: number;
   products: Product[];
   product: Product = new Product();
+  maxAmount: number;
+  minAmount: number;
+  arr = [];
 
   constructor(private http: HttpClient, private serviceShop: ShopService, private route: ActivatedRoute) {
+    this.minAmount = null;
+    this.maxAmount = null;
   }
 
   ngOnInit(): void {
@@ -39,6 +45,9 @@ export class ShopComponent implements OnInit {
       // @ts-ignore
       this.serviceShop.getAllProductByAccoutnId(id).subscribe((item2: any[]) => {
         this.products = item2;
+        this.Page = 1;
+        this.collectionSize = this.products.length;
+        this.pageSize = 9;
       });
     } else {
       this.serviceShop.load().subscribe((item: any[]) => {
@@ -52,7 +61,7 @@ export class ShopComponent implements OnInit {
   }
 
 
-  async ngAfterViewInit(){
+  async ngAfterViewInit() {
     await this.loadScript('assets/js/jquery-3.3.1.min.js');
     await this.loadScript('assets/js/bootstrap.min.js');
     await this.loadScript('assets/js/jquery-ui.min.js');
@@ -72,7 +81,39 @@ export class ShopComponent implements OnInit {
       scriptElement.src = scriptUrl;
       scriptElement.onload = resolve;
       document.body.appendChild(scriptElement);
-    }))
+    }));
   }
 
+  filters() {
+    if (this.minAmount < 0 || this.maxAmount < 0) {
+      alert('Err');
+    } else if (this.minAmount != null && this.maxAmount == null) {
+      for (let i = 0; i < this.products.length; i++) {
+        // @ts-ignore
+        if (this.products[i].productPrice >= this.minAmount) {
+          this.arr.push(this.products[i]);
+        }
+      }
+      return this.products = this.arr;
+    } else if (this.maxAmount != null && this.minAmount == null) {
+      for (let i = 0; i < this.products.length; i++) {
+        // @ts-ignore
+        if (this.products[i].productPrice <= this.maxAmount) {
+          this.arr.push(this.products[i]);
+        }
+      }
+      return this.products = this.arr;
+    } else if (this.maxAmount != null && this.minAmount != null) {
+      for (let i = 0; i < this.products.length; i++) {
+        // @ts-ignore
+        if (this.products[i].productPrice <= this.maxAmount && this.products[i].productPrice >= this.minAmount) {
+          this.arr.push(this.products[i]);
+        }
+      }
+      return this.products = this.arr;
+    } else {
+      alert('please enter price range !!!');
+      return this.products;
+    }
+  }
 }
