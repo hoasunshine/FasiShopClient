@@ -53,6 +53,7 @@
             <!--</div>-->
 
             <div class="col-sm-6">
+              <label for="transportersId">Transporters</label>
               <select id="transportersId" class="form-control" name="transportersId"
                       [(ngModel)]="cartInformation.transportersId">
                 <option selected value=""> Select Transporter</option>
@@ -60,7 +61,8 @@
               </select>
             </div>
             <div class="col-sm-6">
-              <select id="" class="form-control" name="paymentType"
+              <label for="payment">Payment</label>
+              <select id="payment" class="form-control" name="paymentType"
                       [(ngModel)]="cartInformation.paymentType">
                 <option value="Cod"> COD</option>
                 <option value="PayPal">PayPal</option>

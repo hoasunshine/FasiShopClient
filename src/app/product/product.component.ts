@@ -77,7 +77,9 @@ export class ProductComponent implements OnInit {
         this.cart.totalPrice = this.productToCart.productPrice * this.quantity;
         this.cart.quantity = this.quantity;
         this.CartSerice.addToCart(this.cart);
-        this.router.navigate(['/shopping-cart']);
+        this.router.navigate(['/shopping-cart']).then(() => {
+          window.location.reload();
+        });
       } else {
 
         // localStorage.setItem('cart', JSON.stringify(this.listCart));
