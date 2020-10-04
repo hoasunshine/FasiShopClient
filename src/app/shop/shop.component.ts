@@ -3,10 +3,12 @@ import {Component, OnInit} from '@angular/core';
 import {Product} from '../model/product';
 import {ShopService} from '../service/shop.service';
 // @ts-ignore
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 // @ts-ignore
 import {ActivatedRoute} from '@angular/router';
 import {newArray} from '@angular/compiler/src/util';
+import {Accounts} from '../model/account';
+import {Category} from '../model/category';
 
 // @ts-ignore
 @Component({
@@ -17,27 +19,37 @@ import {newArray} from '@angular/compiler/src/util';
 export class ShopComponent implements OnInit {
 
 
+  show: boolean = false;
   Page: number;
   collectionSize: number;
   searchText;
   AccountId: string;
   pageSize: number;
   products: Product[];
+  products2: Product[];
   product: Product = new Product();
-  maxAmount: number;
-  minAmount: number;
+  account: Accounts = new Accounts();
+  endPrice: number;
+  startPrice: number;
+  categoryId: string;
   arr = [];
+  categories: Category[];
 
   constructor(private http: HttpClient, private serviceShop: ShopService, private route: ActivatedRoute) {
-    this.minAmount = null;
-    this.maxAmount = null;
+    this.endPrice = null;
+    this.startPrice = null;
   }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.AccountId = params.AccountId;
     });
-    this.loadData(this.AccountId);
+    this.route.queryParams.subscribe(param => {
+      this.categoryId = param.categoryId;
+    });
+    this.loadData(this.AccountId || this.categoryId);
+    this.loadAccount(this.AccountId);
+    this.loadCategory();
   }
 
   loadData(id: string): void {
@@ -49,15 +61,54 @@ export class ShopComponent implements OnInit {
         this.collectionSize = this.products.length;
         this.pageSize = 9;
       });
-    } else {
+    }
+    // else if (this.categoryId != null) {
+    //   this.serviceShop.load().subscribe((item: any[]) => {
+    //     // @ts-ignore
+    //     this.products2 = item.data;
+    //     console.log(this.products2);
+    //     this.products = [];
+    //     for (let i = 0; i < this.products2.length; i++) {
+    //       console.log(this.products2[i].category.categoryId);
+    //       if (this.products2[i].category.categoryId == id) {
+    //         this.product = new Product();
+    //         this.product = this.products2[i];
+    //         console.log(this.product);
+    //         this.products.push(this.product);
+    //         this.Page = 1;
+    //         this.collectionSize = this.products.length;
+    //         this.pageSize = 9;
+    //       }
+    //     }
+    //   });
+    // }
+    else {
       this.serviceShop.load().subscribe((item: any[]) => {
         // @ts-ignore
-        this.products = item.data.productDTOList;
+        this.products = item.data;
         this.Page = 1;
         this.collectionSize = this.products.length;
         this.pageSize = 9;
       });
     }
+  }
+
+  loadCategory() {
+    this.serviceShop.getCategory().subscribe((item: any[]) => {
+      // @ts-ignore
+      this.categories = item.data.list;
+    });
+  }
+
+  loadAccount(id: string) {
+    if (id != null) {
+      this.serviceShop.getAccount(id).subscribe((item: any) => {
+        this.account = item.data;
+        console.log(this.account);
+        this.show = true;
+      });
+    }
+
   }
 
 
@@ -85,35 +136,66 @@ export class ShopComponent implements OnInit {
   }
 
   filters() {
-    if (this.minAmount < 0 || this.maxAmount < 0) {
-      alert('Err');
-    } else if (this.minAmount != null && this.maxAmount == null) {
-      for (let i = 0; i < this.products.length; i++) {
-        // @ts-ignore
-        if (this.products[i].productPrice >= this.minAmount) {
-          this.arr.push(this.products[i]);
+    const params = new HttpParams()
+      .set('startPrice', String(this.startPrice))
+      .set('endPrice', String(this.endPrice));
+    // if (this.minAmount < 0 || this.maxAmount < 0) {
+    //   alert('Err');
+    // } else if (this.minAmount != null && this.maxAmount == null) {
+    //   for (let i = 0; i < this.products.length; i++) {
+    //     // @ts-ignore
+    //     if (this.products[i].productPrice >= this.minAmount) {
+    //       this.arr.push(this.products[i]);
+    //     }
+    //   }
+    //   return this.products = this.arr;
+    // } else if (this.maxAmount != null && this.minAmount == null) {
+    //   for (let i = 0; i < this.products.length; i++) {
+    //     // @ts-ignore
+    //     if (this.products[i].productPrice <= this.maxAmount) {
+    //       this.arr.push(this.products[i]);
+    //     }
+    //   }
+    //   return this.products = this.arr;
+    // } else if (this.maxAmount != null && this.minAmount != null) {
+    //   for (let i = 0; i < this.products.length; i++) {
+    //     // @ts-ignore
+    //     if (this.products[i].productPrice <= this.maxAmount && this.products[i].productPrice >= this.minAmount) {
+    //       this.arr.push(this.products[i]);
+    //     }
+    //   }
+    //   return this.products = this.arr;
+    // } else {
+    //   alert('please enter price range !!!');
+    //   return this.products;
+    // }
+    // @ts-ignore
+    this.http.get('http://localhost:8080/products?' + params).subscribe((items: any[]) => {
+      // @ts-ignore
+      this.products = items.data;
+      console.log('http://localhost:8080/products?' + params);
+      console.log(items);
+    });
+  }
+
+  reload() {
+    this.serviceShop.load().subscribe((item: any[]) => {
+      // @ts-ignore
+      this.products2 = item.data;
+      console.log(this.products2);
+      this.products = [];
+      for (let i = 0; i < this.products2.length; i++) {
+        console.log(this.products2[i].category.categoryId);
+        if (this.products2[i].category.categoryId == this.categoryId) {
+          this.product = new Product();
+          this.product = this.products2[i];
+          console.log(this.product);
+          this.products.push(this.product);
+          this.Page = 1;
+          this.collectionSize = this.products.length;
+          this.pageSize = 9;
         }
       }
-      return this.products = this.arr;
-    } else if (this.maxAmount != null && this.minAmount == null) {
-      for (let i = 0; i < this.products.length; i++) {
-        // @ts-ignore
-        if (this.products[i].productPrice <= this.maxAmount) {
-          this.arr.push(this.products[i]);
-        }
-      }
-      return this.products = this.arr;
-    } else if (this.maxAmount != null && this.minAmount != null) {
-      for (let i = 0; i < this.products.length; i++) {
-        // @ts-ignore
-        if (this.products[i].productPrice <= this.maxAmount && this.products[i].productPrice >= this.minAmount) {
-          this.arr.push(this.products[i]);
-        }
-      }
-      return this.products = this.arr;
-    } else {
-      alert('please enter price range !!!');
-      return this.products;
-    }
+    });
   }
 }

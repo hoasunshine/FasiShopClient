@@ -11,6 +11,7 @@ export class AuthenticationService {
 
 
   private url = 'http://localhost:8080/accounts/login';
+  private register = 'http://localhost:8080/accounts/register';
 
   private currentUserSubject: BehaviorSubject<Accounts>;
 
@@ -32,9 +33,33 @@ export class AuthenticationService {
     this.http.post(this.url, body).subscribe((item: any) => {
         this.account = item;
         localStorage.setItem('currentUser', JSON.stringify(this.account));
-        this.router.navigate(['/home']);
+        this.router.navigate(['/home']).then(() => {
+          window.location.reload();
+        });
         alert('Login Success !!!');
       },
       (error) => alert('Account or password is incorrect !!!'));
+  }
+
+  Register(account: Accounts) {
+    const obj = JSON.stringify(account);
+    console.log(account);
+    console.log(this.register, obj);
+    return this.http.post(this.register, obj, {
+      headers: {'Content-Type': 'application/json'}
+    }).subscribe((item: any) => {
+      const string = item.message;
+      const status = item.status;
+      if (status === 208) {
+        alert('Account Already Exist !!!');
+      } else if (string === 'Action Success') {
+        console.log(string);
+        console.log(status);
+        alert('Register Success !!!');
+        this.router.navigate(['/login']);
+      } else {
+        alert('NotFound');
+      }
+    });
   }
 }

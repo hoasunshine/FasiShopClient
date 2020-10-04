@@ -48,27 +48,34 @@ export class CheckoutComponent implements OnInit {
 
   checkout() {
     this.shopping.list = this.cart;
-    this.cartInformation.accountId = JSON.parse(localStorage.getItem('currentUser')).accountId;
-    this.shopping.cartInformation = this.cartInformation;
-    console.log(this.shopping);
-    this.shoppingCart.createOrder(this.shopping).subscribe(
-      (item: any) => {
-        this.mess = item.message;
-        console.log(this.mess);
-        if (this.mess === 'Action Success') {
-          alert('Success');
-          this.cartService.clearCart();
-          this.router.navigate(['/home']);
-        } else if (this.mess === 'There are products with excess quantity in stock') {
-          alert(this.mess);
-          this.router.navigate(['/shopping-cart']);
-        }else {
-          alert('Err')
-        }
-      });
+    if (JSON.parse(localStorage.getItem('currentUser')) === null) {
+      alert('Please Login !!!');
+      this.router.navigate(['/login']);
+    } else {
+      this.cartInformation.accountId = JSON.parse(localStorage.getItem('currentUser')).accountId;
+      this.shopping.cartInformation = this.cartInformation;
+      console.log(this.shopping);
+      this.shoppingCart.createOrder(this.shopping).subscribe(
+        (item: any) => {
+          this.mess = item.message;
+          console.log(this.mess);
+          if (this.mess === 'Action Success') {
+            alert('Success');
+            this.cartService.clearCart();
+            this.router.navigate(['/home']);
+          } else if (this.mess === 'There are products with excess quantity in stock') {
+            alert(this.mess);
+            this.router.navigate(['/shopping-cart']).then(() => {
+              window.location.reload();
+            });
+          } else {
+            alert('Err');
+          }
+        });
+    }
   }
 
-  async ngAfterViewInit(){
+  async ngAfterViewInit() {
     await this.loadScript('assets/js/jquery-3.3.1.min.js');
     await this.loadScript('assets/js/bootstrap.min.js');
     await this.loadScript('assets/js/jquery-ui.min.js');
@@ -88,7 +95,7 @@ export class CheckoutComponent implements OnInit {
       scriptElement.src = scriptUrl;
       scriptElement.onload = resolve;
       document.body.appendChild(scriptElement);
-    }))
+    }));
   }
 
 }

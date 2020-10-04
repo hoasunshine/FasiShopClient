@@ -16,5 +16,5 @@ export class Accounts {
   password: string;
   token: string;
   category: Category;
-  role: Role[];
+  rolesList: Role[];
 }

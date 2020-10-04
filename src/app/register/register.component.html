@@ -13,35 +13,67 @@
 <!-- Breadcrumb Form Section Begin -->
 
 <!-- Register Section Begin -->
-<div class="register-login-section spad">
+<section class="checkout-section spad">
   <div class="container">
-    <div class="row">
-      <div class="col-lg-6 offset-lg-3">
-        <div class="register-form">
-          <h2>Register</h2>
-          <form action="#">
-            <div class="group-input">
-              <label for="username">Username or email address *</label>
-              <input type="text" id="username">
+    <form action="#" class="checkout-form">
+      <div class="row">
+        <div class="d-flex justify-content-around">
+          <div class="col-lg-6">
+            <h4 class="d-flex justify-content-around">Register</h4>
+            <div class="row">
+              <div class="col-lg-6">
+                <label for="fir">Full Name<span>*</span></label>
+                <input type="text" [(ngModel)]="accountName" name="accountName" id="fir">
+              </div>
+              <div class="col-lg-6">
+                <label for="last">Address<span>*</span></label>
+                <input type="text" [(ngModel)]="address" name="address" id="last">
+              </div>
+              <div class="col-lg-6">
+                <label for="town">Password<span>*</span></label>
+                <input type="password" [(ngModel)]="password" name="password" id="town">
+              </div>
+              <div class="col-lg-6">
+                <div>
+                  <label>Gender</label>
+                </div>
+                <div style="padding-top: 8px">
+                  <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="customRadioInline1" value="Female" [(ngModel)]="gender" name="gender" class="custom-control-input">
+                    <label class="custom-control-label" for="customRadioInline1">Female</label>
+                  </div>
+                  <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="customRadioInline2" value="Male" [(ngModel)]="gender" name="gender" class="custom-control-input">
+                    <label class="custom-control-label" for="customRadioInline2">Male</label>
+                  </div>
+                  <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="customRadioInline3" value="Other" [(ngModel)]="gender" name="gender" class="custom-control-input">
+                    <label class="custom-control-label" for="customRadioInline3">Other</label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <label for="email">Email Address<span>*</span></label>
+                <input type="email" id="email" [(ngModel)]="email" name="email">
+              </div>
+              <div class="col-lg-6">
+                <label for="phone">Phone<span>*</span></label>
+                <input type="text" [(ngModel)]="phoneNumber" name="phoneNumber" id="phone">
+              </div>
+              <div class="col-lg-12">
+                <label for="birthday">Birthday</label>
+                <input type="date" name="birthday" [(ngModel)]="birthday" id="birthday">
+              </div>
             </div>
-            <div class="group-input">
-              <label for="pass">Password *</label>
-              <input type="text" id="pass">
-            </div>
-            <div class="group-input">
-              <label for="con-pass">Confirm Password *</label>
-              <input type="text" id="con-pass">
-            </div>
-            <button type="submit" class="site-btn register-btn">REGISTER</button>
-          </form>
-          <div class="switch-login">
-            <a href="./login.html" class="or-login">Or Login</a>
           </div>
         </div>
       </div>
-    </div>
+      <div class="d-flex justify-content-around">
+        <button type="submit" (click)="register()" class="site-btn register-btn">REGISTER</button>
+      </div>
+    </form>
   </div>
-</div>
+</section>
 <!-- Register Form Section End -->
 
 <!-- Partner Logo Section Begin -->
@@ -50,27 +82,27 @@
     <div class="logo-carousel owl-carousel">
       <div class="logo-item">
         <div class="tablecell-inner">
-          <img src="img/logo-carousel/logo-1.png" alt="">
+          <img src="../../assets/img/logo-carousel/logo-1.png" alt="">
         </div>
       </div>
       <div class="logo-item">
         <div class="tablecell-inner">
-          <img src="img/logo-carousel/logo-2.png" alt="">
+          <img src="../../assets/img/logo-carousel/logo-2.png" alt="">
         </div>
       </div>
       <div class="logo-item">
         <div class="tablecell-inner">
-          <img src="img/logo-carousel/logo-3.png" alt="">
+          <img src="../../assets/img/logo-carousel/logo-3.png" alt="">
         </div>
       </div>
       <div class="logo-item">
         <div class="tablecell-inner">
-          <img src="img/logo-carousel/logo-4.png" alt="">
+          <img src="../../assets/img/logo-carousel/logo-4.png" alt="">
         </div>
       </div>
       <div class="logo-item">
         <div class="tablecell-inner">
-          <img src="img/logo-carousel/logo-5.png" alt="">
+          <img src="../../assets/img/logo-carousel/logo-5.png" alt="">
         </div>
       </div>
     </div>

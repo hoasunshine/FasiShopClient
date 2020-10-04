@@ -9,7 +9,7 @@ export class CheckoutService {
 
   private url = 'http://localhost:8080/order';
 
-  public options = {headers: new HttpHeaders().set('Authorization', JSON.parse(localStorage.getItem('currentUser')).token)};
+  public options = {headers: new HttpHeaders().set('Authorization', '1')};
 
   constructor(private http: HttpClient) {
 
