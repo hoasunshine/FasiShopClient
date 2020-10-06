@@ -50,7 +50,7 @@ export class ProductComponent implements OnInit {
   listImage: Images[];
 
 
-  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private service: ShopService, private CartSerice: CartService) {
+  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private service: ShopService, private CartService: CartService) {
   }
 
   ngOnInit(): void {
@@ -76,7 +76,7 @@ export class ProductComponent implements OnInit {
         // @ts-ignore
         this.cart.totalPrice = this.productToCart.productPrice * this.quantity;
         this.cart.quantity = this.quantity;
-        this.CartSerice.addToCart(this.cart);
+        this.CartService.addToCart(this.cart);
         this.router.navigate(['/shopping-cart']).then(() => {
           window.location.reload();
         });
@@ -120,10 +120,12 @@ export class ProductComponent implements OnInit {
 
   changeQuantityMinus() {
     // window.location.reload();
-
-    // @ts-ignore
-    this.quantity -= 1;
-
+    if (this.quantity <= 1) {
+      alert('Invalid quantity !!!');
+    } else {
+      // @ts-ignore
+      this.quantity -= 1;
+    }
   }
 
   changeQuantityPlus() {
