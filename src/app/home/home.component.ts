@@ -1,5 +1,10 @@
 // @ts-ignore
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {ShopService} from '../service/shop.service';
+import {ActivatedRoute} from '@angular/router';
+import {HomeService} from '../service/home.service';
+import {HotProduct} from '../model/hotProduct';
 
 // @ts-ignore
 @Component({
@@ -9,12 +14,36 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  hotProduct: HotProduct[];
+  hotProductMen: HotProduct[];
+  hotProductWomen: HotProduct[];
 
-  ngOnInit(): void {
+  constructor(private http: HttpClient, private service: HomeService, private route: ActivatedRoute) {
   }
 
-  async ngAfterViewInit(){
+  ngOnInit(): void {
+    this.loadData();
+    console.log(this.hotProductWomen);
+    console.log(this.hotProductMen);
+  }
+
+  loadData() {
+    this.service.load().subscribe((item: any[]) => {
+      // @ts-ignore
+      this.hotProduct = item.data.list;
+      this.hotProductMen = [];
+      this.hotProductWomen = [];
+      for (let i = 0; i < this.hotProduct.length; i++) {
+        if (this.hotProduct[i].product.category.categoryName == 'Men') {
+          this.hotProductMen.push(this.hotProduct[i]);
+        } else if (this.hotProduct[i].product.category.categoryName == 'Women') {
+          this.hotProductWomen.push(this.hotProduct[i]);
+        }
+      }
+    });
+  }
+
+  async ngAfterViewInit() {
     await this.loadScript('assets/js/jquery-3.3.1.min.js');
     await this.loadScript('assets/js/bootstrap.min.js');
     await this.loadScript('assets/js/jquery-ui.min.js');
@@ -34,7 +63,7 @@ export class HomeComponent implements OnInit {
       scriptElement.src = scriptUrl;
       scriptElement.onload = resolve;
       document.body.appendChild(scriptElement);
-    }))
+    }));
   }
 
 }
