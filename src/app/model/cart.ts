@@ -6,5 +6,6 @@ export class Cart {
   quantity: number;
   totalPrice: string;
   property: string;
+  sellerId:string;
 
 }

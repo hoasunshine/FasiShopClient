@@ -39,7 +39,6 @@ export class ShoppingCartComponent implements OnInit {
 
     console.log(this.price);
 
-
   }
 
   changeQuantityMinus(id: string) {
