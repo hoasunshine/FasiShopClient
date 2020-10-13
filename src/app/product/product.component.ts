@@ -72,6 +72,7 @@ export class ProductComponent implements OnInit {
         this.cart.image = this.productToCart.imageProduct;
         this.cart.productName = this.productToCart.productName;
         this.cart.property = this.property;
+        this.cart.sellerId = this.accountId;
         this.cart.productPrice = this.productToCart.productPrice;
         // @ts-ignore
         this.cart.totalPrice = this.productToCart.productPrice * this.quantity;
@@ -81,7 +82,6 @@ export class ProductComponent implements OnInit {
           window.location.reload();
         });
       } else {
-
         // localStorage.setItem('cart', JSON.stringify(this.listCart));
       }
     });
@@ -141,6 +141,11 @@ export class ProductComponent implements OnInit {
       this.commentR = item.data.commentRatingDTOList;
       console.log(this.commentR);
     });
+  }
+
+
+  redirectProduct(id) {
+    window.location.href = '/product?Id=' + id;
   }
 
   async ngAfterViewInit() {

@@ -10,6 +10,7 @@ export class CartService {
   local = [];
   getLocal = [];
   getTotalLateUpdate = [];
+  arrayCartItem = [];
   cart1: Cart = new Cart();
 
   constructor() {
@@ -17,15 +18,14 @@ export class CartService {
 
   addToCart(cart: Cart) {
     this.getLocal = JSON.parse(localStorage.getItem('cart'));
-
     console.log(this.getLocal);
-
     if (this.getLocal == null) {
       // @ts-ignore
       cart.totalPrice = cart.productPrice * cart.quantity;
       this.items.push(cart);
       localStorage.setItem('cart', JSON.stringify(this.items));
-    } else {
+    }
+    else {
       this.local = JSON.parse(localStorage.getItem('cart')).filter(function(node) {
         return node.productId == cart.productId;
       });
@@ -53,7 +53,14 @@ export class CartService {
         localStorage.setItem('cart', JSON.stringify(this.getTotalLateUpdate));
       }
     }
-
+    // else {
+    //   this.arrayCartItem = JSON.parse(localStorage.getItem('cart'));
+    //   for (let i = 0; i < this.arrayCartItem.length; i++) {
+    //     if (cart.property === this.arrayCartItem[i]) {
+    //
+    //     }
+    //   }
+    // }
   }
 
   changeQuantityMinus(id: string) {

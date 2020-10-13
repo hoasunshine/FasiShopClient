@@ -198,4 +198,8 @@ export class ShopComponent implements OnInit {
       }
     });
   }
+
+  AllProduct() {
+    window.location.href='shop';
+  }
 }

@@ -17,7 +17,7 @@
       </div>
       <div class="ht-right">
         <div class="top-social">
-          <a *ngIf="show" (click)="logout()" class="login-panel">Logout</a>
+          <a *ngIf="show" href="javascript:void (0)" (click)="logout()" class="login-panel">Logout</a>
           <a *ngIf="show" href="/login" class="login-panel"><i class="fa fa-user"></i>{{currentUserEmail}}</a>
           <a *ngIf="!show" href="/login" class="login-panel"><i class="fa fa-user"></i>Login</a>
         </div>
