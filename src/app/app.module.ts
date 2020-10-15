@@ -18,6 +18,8 @@ import { CheckoutComponent } from './checkout/checkout.component';
 // @ts-ignore
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {Ng2SearchPipeModule} from 'ng2-search-filter';
+import { ContactComponent } from './contact/contact.component';
+import { OrderManagementComponent } from './order-management/order-management.component';
 
 // @ts-ignore
 @NgModule({
@@ -30,6 +32,8 @@ import {Ng2SearchPipeModule} from 'ng2-search-filter';
     RegisterComponent,
     ShoppingCartComponent,
     CheckoutComponent,
+    ContactComponent,
+    OrderManagementComponent,
   ],
   imports: [
     BrowserModule,

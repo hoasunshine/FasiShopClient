@@ -24,6 +24,7 @@
             <tr>
               <th>Image</th>
               <th class="p-name">Product Name</th>
+              <th class="p-name">Property</th>
               <th>Price</th>
               <th>Quantity</th>
               <th>Total</th>
@@ -31,24 +32,27 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let list of cart">
-              <td class="cart-pic first-row"><img src="{{list.image}}" alt=""></td>
+            <tr *ngFor="let list of cart ,let i=index">
+              <td class="cart-pic first-row"><img src="{{list.image}}" alt="" style="width: 150px;height: 200px"></td>
               <td class="cart-title first-row">
                 <h5>{{list.productName}}</h5>
+              </td>
+              <td class="cart-title first-row">
+                <h5>{{list.property}}</h5>
               </td>
               <td class="p-price first-row">${{list.productPrice}}</td>
               <td class="qua-col first-row">
                 <div class="quantity">
                   <div class="pro-qty">
-                    <span class="dec qtybtn" (click)="changeQuantityMinus(list.productId)">-</span>
+                    <span class="dec qtybtn" (click)="changeQuantityMinus(list.productId,i,list.property)">-</span>
                     <input value="{{list.quantity}}">
-                    <span class="inc qtybtn" (click)="changeQuantityPlus(list.productId)">+</span>
+                    <span class="inc qtybtn" (click)="changeQuantityPlus(list.productId,i,list.property)">+</span>
                   </div>
                 </div>
               </td>
               <td class="total-price first-row">${{list.totalPrice}}</td>
               <td class="close-td first-row"><i class="ti-close"
-                                                (click)="remove(list.productId)"></i></td>
+                                                (click)="remove(list.productId,list.property,i)"></i></td>
             </tr>
             </tbody>
           </table>

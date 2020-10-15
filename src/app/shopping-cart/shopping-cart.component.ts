@@ -34,28 +34,27 @@ export class ShoppingCartComponent implements OnInit {
       arr.push(this.cart[i].totalPrice);
       this.price = arr.reduce((a, b) => {
         return a + b;
-      })
+      });
     }
-
     console.log(this.price);
-
   }
 
-  changeQuantityMinus(id: string) {
-    // window.location.reload();
-
-    // @ts-ignore
-    this.cartItem = this.cartService.changeQuantityMinus(id);
-  }
-
-  changeQuantityPlus(id: string) {
+  changeQuantityMinus(id: string, i: number, property: string) {
     // window.location.reload();
     // @ts-ignore
-    this.cartItem = this.cartService.changeQuantityPlus(id);
+    this.cartItem = this.cartService.changeQuantityMinus(id,i,property);
+    window.location.reload();
   }
 
-  remove(id: string) {
-    this.cartService.removeItem(id);
+  changeQuantityPlus(id: string, i: number, property: string) {
+    // window.location.reload();
+    // @ts-ignore
+    this.cartItem = this.cartService.changeQuantityPlus(id,i,property);
+    window.location.reload();
+  }
+
+  remove(id: string, property: string, i: number) {
+    this.cartService.removeItem(id, property,i);
     alert('Are you want delete ???');
     window.location.reload();
   }

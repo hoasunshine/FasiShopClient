@@ -17,7 +17,6 @@ export class CheckoutService {
 
   createOrder(shoppingCart: ShoppingCart) {
     const ob = JSON.stringify(shoppingCart);
-    console.log(ob);
     return this.http.post(this.url, ob, {
       headers: {'Content-Type': 'application/json'}
     });

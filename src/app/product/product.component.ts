@@ -23,11 +23,15 @@ export class ProductComponent implements OnInit {
 
   productId: string;
 
+  mess: string;
+
   categoryName: string;
 
   property: string;
 
   accountId: string;
+
+  id: string;
 
   quantity: number;
 
@@ -49,6 +53,10 @@ export class ProductComponent implements OnInit {
 
   listImage: Images[];
 
+  comment: string;
+
+  commentMain: CommentRating = new CommentRating();
+
 
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private service: ShopService, private CartService: CartService) {
   }
@@ -61,6 +69,7 @@ export class ProductComponent implements OnInit {
       this.warehouseByProductId(this.productId);
       this.commentRating(this.productId);
       this.quantity = 1;
+
     });
   }
 
@@ -94,6 +103,28 @@ export class ProductComponent implements OnInit {
       // @ts-ignore
       this.listImage = items.imageDTOS;
     });
+  }
+
+  sendComment() {
+    // @ts-ignore
+    this.account = JSON.parse(localStorage.getItem('currentUser'));
+    this.id = this.account.accountId;
+    this.commentMain.comment = this.comment;
+    this.commentMain.accountId = this.id;
+    // @ts-ignore
+    this.commentMain.value = 75;
+    this.commentMain.productId = this.productId;
+    this.service.postComment(this.commentMain).subscribe(
+      (item: any) => {
+        this.mess = item.message;
+        console.log(this.mess);
+        if (this.mess === 'Action Success') {
+          alert('Action Success');
+          window.location.reload();
+        } else {
+          alert('Err');
+        }
+      });
   }
 
   detail(id: string) {
