@@ -11,6 +11,7 @@ import {Transporters} from '../model/transporters';
 import {CheckoutService} from '../service/checkout.service';
 import {ShoppingCart} from '../model/shoppingCart';
 import {CartInformation} from '../model/cartInformation';
+import {Vnpay} from '../model/vnpay';
 
 // @ts-ignore
 @Component({
@@ -26,6 +27,7 @@ export class CheckoutComponent implements OnInit {
   shopping: ShoppingCart = new ShoppingCart();
   accountId: string;
   email: string;
+  price: string;
   cartInformation: CartInformation = new CartInformation();
   mess: string;
 
@@ -54,24 +56,48 @@ export class CheckoutComponent implements OnInit {
     } else {
       this.cartInformation.accountId = JSON.parse(localStorage.getItem('currentUser')).accountId;
       this.shopping.cartInformation = this.cartInformation;
+      localStorage.setItem('cartInformation', JSON.stringify(this.cartInformation));
       console.log(this.shopping);
-      this.shoppingCart.createOrder(this.shopping).subscribe(
-        (item: any) => {
-          this.mess = item.message;
-          console.log(this.mess);
-          if (this.mess === 'Action Success') {
-            alert('Success');
-            this.cartService.clearCart();
-            this.router.navigate(['/home']);
-          } else if (this.mess === 'There are products with excess quantity in stock') {
-            alert(this.mess);
-            this.router.navigate(['/shopping-cart']).then(() => {
-              window.location.reload();
-            });
-          } else {
-            alert('Err');
-          }
-        });
+      if (this.shopping.cartInformation.paymentType == 'InternetBanking') {
+        const arr = [];
+        for (let i = 0; i < this.shopping.list.length; i++) {
+          arr.push(this.shopping.list[i].totalPrice);
+          this.price = arr.reduce((a, b) => {
+            return a + b;
+          });
+        }
+        // @ts-ignore
+        localStorage.setItem('amount', JSON.stringify(this.price * 23000 + '00'));
+        fetch('https://us-central1-appvnpay-e324e.cloudfunctions.net/app/create_payment_url', {
+          method: 'POST',
+          body: JSON.stringify({
+            // @ts-ignore
+            amount: this.price * 23000,
+            info: 'String',
+            bill: 'billpayment',
+            lang: 'vn',
+          })
+          // @ts-ignore
+        }).then(res => res.json()).then(data => window.location.href = (data.data));
+      } else {
+        this.shoppingCart.createOrder(this.shopping).subscribe(
+          (item: any) => {
+            this.mess = item.message;
+            console.log(this.mess);
+            if (this.mess === 'Action Success') {
+              alert('Success');
+              this.cartService.clearCart();
+              this.router.navigate(['/home']);
+            } else if (this.mess === 'There are products with excess quantity in stock') {
+              alert(this.mess);
+              this.router.navigate(['/shopping-cart']).then(() => {
+                window.location.reload();
+              });
+            } else {
+              alert('Err');
+            }
+          });
+      }
     }
   }
 

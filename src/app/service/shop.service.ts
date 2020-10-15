@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Accounts} from '../model/account';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {Product} from '../model/product';
+import {CommentRating} from '../model/commentRating';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,7 @@ export class ShopService {
   private url6 = 'http://localhost:8080/products/listImage';
   private category = 'http://localhost:8080/categories';
   private getProductByCategory = 'http://localhost:8080/products/getProductByCategoryId';
+  private comment = 'http://localhost:8080/commentRating';
 
 
   public currentUser: Observable<Accounts>;
@@ -71,6 +73,15 @@ export class ShopService {
 
   getAccount(id: string) {
     return this.http.get(`${this.url5}/${id}`, this.options);
+  }
+
+
+  postComment(comment: CommentRating) {
+    const ob = JSON.stringify(comment);
+    console.log(ob);
+    return this.http.post(this.comment, ob, {
+      headers: {'Content-Type': 'application/json'}
+    });
   }
 
 }

@@ -10,37 +10,44 @@ export class CartService {
   local = [];
   getLocal = [];
   getTotalLateUpdate = [];
-  arrayCartItem = [];
+  getTotalLateUpdate2 = [];
+  arrayCartItem: Cart[];
   cart1: Cart = new Cart();
+  arrayAfterRemove: Cart[];
 
   constructor() {
   }
 
   addToCart(cart: Cart) {
     this.getLocal = JSON.parse(localStorage.getItem('cart'));
+    this.arrayCartItem = JSON.parse(localStorage.getItem('cart'));
+    if (this.arrayCartItem != null) {
+      for (let i = 0; i < this.arrayCartItem.length; i++) {
+        if (cart.productId == this.arrayCartItem[i].productId && cart.property === this.arrayCartItem[i].property) {
+          this.getTotalLateUpdate2.push(cart);
+        }
+      }
+    }
+    console.log('a' + this.getTotalLateUpdate2);
     console.log(this.getLocal);
     if (this.getLocal == null) {
       // @ts-ignore
       cart.totalPrice = cart.productPrice * cart.quantity;
       this.items.push(cart);
       localStorage.setItem('cart', JSON.stringify(this.items));
-    }
-    else {
+    } else {
+      console.log(this.arrayCartItem);
       this.local = JSON.parse(localStorage.getItem('cart')).filter(function(node) {
         return node.productId == cart.productId;
       });
       this.cart1 = this.local[0];
+      this.arrayCartItem = JSON.parse(localStorage.getItem('cart'));
       if (this.cart1 != undefined) {
-        let products = JSON.parse(localStorage.getItem('cart')).filter(product => product.productId !== cart.productId);
-        localStorage.setItem('cart', JSON.stringify(products));
-        this.getTotalLateUpdate = JSON.parse(localStorage.getItem('cart'));
-        //@ts-ignore
-        cart.quantity += this.cart1.quantity;
-        if (cart.quantity <= 0) {
-          alert('So luong khong hop le !!!');
-          window.location.reload();
+        if (this.getTotalLateUpdate2.length > 0) {
+          alert('Product already exists please update quantity !!!');
         } else {
-          //@ts-ignore
+          this.getTotalLateUpdate = JSON.parse(localStorage.getItem('cart'));
+          // @ts-ignore
           cart.totalPrice = cart.productPrice * cart.quantity;
           this.getTotalLateUpdate.push(cart);
           localStorage.setItem('cart', JSON.stringify(this.getTotalLateUpdate));
@@ -53,35 +60,47 @@ export class CartService {
         localStorage.setItem('cart', JSON.stringify(this.getTotalLateUpdate));
       }
     }
-    // else {
-    //   this.arrayCartItem = JSON.parse(localStorage.getItem('cart'));
-    //   for (let i = 0; i < this.arrayCartItem.length; i++) {
-    //     if (cart.property === this.arrayCartItem[i]) {
-    //
-    //     }
-    //   }
-    // }
   }
 
-  changeQuantityMinus(id: string) {
-
-    this.items = JSON.parse(localStorage.getItem('cart')).filter(x => x.productId == id);
+  changeQuantityMinus(id: string, i: number, property: string) {
+    this.items = JSON.parse(localStorage.getItem('cart')).filter(x => x.productId == id && x.property == property);
     this.cart1 = this.items[0];
-    this.cart1.quantity = -1;
-    this.addToCart(this.cart1);
+    this.cart1.quantity -= 1;
+    if (this.cart1.quantity <= 0) {
+      alert('Invalid quantity !!!');
+    } else {
+      // @ts-ignore
+      this.cart1.totalPrice = this.cart1.quantity * this.cart1.productPrice;
+      console.log(this.cart1);
+      this.arrayCartItem = JSON.parse(localStorage.getItem('cart'));
+      this.arrayCartItem.splice(i, 1);
+      this.arrayCartItem.push(this.cart1);
+      localStorage.setItem('cart', JSON.stringify(this.arrayCartItem));
+    }
   }
 
-  changeQuantityPlus(id: string) {
-
-    this.items = JSON.parse(localStorage.getItem('cart')).filter(x => x.productId == id);
+  changeQuantityPlus(id: string, i: number, property: string) {
+    this.items = JSON.parse(localStorage.getItem('cart')).filter(x => x.productId == id && x.property == property);
     this.cart1 = this.items[0];
-    this.cart1.quantity = 1;
-    this.addToCart(this.cart1);
+    this.cart1.quantity += 1;
+    if (this.cart1.quantity <= 0) {
+      alert('Invalid quantity !!!');
+    } else {
+      // @ts-ignore
+      this.cart1.totalPrice = this.cart1.quantity * this.cart1.productPrice;
+      console.log(this.cart1);
+      this.arrayCartItem = JSON.parse(localStorage.getItem('cart'));
+      this.arrayCartItem.splice(i, 1);
+      this.arrayCartItem.push(this.cart1);
+      localStorage.setItem('cart', JSON.stringify(this.arrayCartItem));
+    }
   }
 
-  removeItem(id: string) {
-    let products = JSON.parse(localStorage.getItem('cart')).filter(product => product.productId !== id);
-    localStorage.setItem('cart', JSON.stringify(products));
+  removeItem(id: string, property: string, i: number) {
+    this.arrayCartItem = JSON.parse(localStorage.getItem('cart'));
+    this.arrayCartItem.splice(i, 1);
+    console.log(this.arrayCartItem);
+    localStorage.setItem('cart', JSON.stringify(this.arrayCartItem));
   }
 
   getItems() {

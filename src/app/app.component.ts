@@ -1,6 +1,7 @@
 // @ts-ignore
 import {Component, OnInit} from '@angular/core';
 import {Accounts} from './model/account';
+import {log} from 'util';
 
 // @ts-ignore
 @Component({
@@ -29,7 +30,7 @@ export class AppComponent implements OnInit {
     }
     if (this.arr == null) {
       this.count = 0;
-    }else {
+    } else {
       this.count = this.arr.length;
     }
   }
@@ -39,5 +40,4 @@ export class AppComponent implements OnInit {
     localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
     window.location.reload();
   }
-
 }

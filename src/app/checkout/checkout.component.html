@@ -65,7 +65,7 @@
               <select id="payment" class="form-control" name="paymentType"
                       [(ngModel)]="cartInformation.paymentType">
                 <option value="Cod"> COD</option>
-                <option value="PayPal">PayPal</option>
+                <option value="InternetBanking">PayPal</option>
               </select>
             </div>
           </div>
@@ -78,9 +78,10 @@
             <h4>Your Order</h4>
             <div class="order-total">
               <ul class="order-table">
-                <li>Product<span>Total</span></li>
+                <li>Product<span>Total</span><span style="padding-right: 30px">Property</span></li>
                 <li class="fw-normal" *ngFor="let list of cart">{{list.productName}} x {{list.quantity}}
-                  <span>${{list.totalPrice}}</span></li>
+                  <span>${{list.totalPrice}}</span>
+                  <span style="padding-right: 80px">{{list.property}}</span></li>
               </ul>
               <div class="order-btn">
                 <button type="submit" class="site-btn place-btn" (click)="checkout()">Place Order</button>

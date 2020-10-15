@@ -1,0 +1,147 @@
+<div class="breacrumb-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="breadcrumb-text product-more">
+          <a href="./home.html"><i class="fa fa-home"></i> Home</a>
+          <a href="./shop.html">Shop</a>
+          <span>Order-Management</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Breadcrumb Section Begin -->
+
+<!-- Shopping Cart Section Begin -->
+<section class="shopping-cart spad">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="cart-table">
+          <table>
+            <thead>
+            <tr>
+              <th>OrderId</th>
+              <th>Account Name</th>
+              <th>Status</th>
+              <th>ShipAddress</th>
+              <th>ShipPhone</th>
+              <th>Transporters</th>
+              <th>PaymentType</th>
+              <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let list of array">
+              <td class="">
+                <h5>{{list.id}}</h5>
+              </td>
+              <td class="">
+                <h5>{{list.accountName}}</h5>
+              </td>
+              <td class="">
+                <h5>{{list.status}}</h5>
+              </td>
+              <td class="">
+                <h5>{{list.shipAddress}}</h5>
+              </td>
+              <td class="">
+                <h5>{{list.shipPhone}}</h5>
+              </td>
+              <td class="">
+                <h5>{{list.transportersName}}</h5>
+              </td>
+              <td class="">
+                <h5>{{list.paymentType}}</h5>
+              </td>
+              <td class="">
+                <button (click)="confirm(list.id)">Confirm</button>
+                <button (click)="detail(list.id)" data-toggle="modal" data-target="#exampleModal">Detail</button>
+              </td>
+              <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                   aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Order Detail</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                        <table style="padding-right: 10px">
+                          <tr>
+                            <th>Name</th>
+                            <th>UnitPrice</th>
+                            <th>Property</th>
+                            <th>Quantity</th>
+                          </tr>
+                          <tbody>
+                          <tr *ngFor="let list of arrayOrderDetail">
+                            <td class="">
+                              <h9>{{list.productName}}</h9>
+                            </td>
+                            <td class="">
+                              <h9>{{list.productPrice}}$</h9>
+                            </td>
+                            <td class="">
+                              <h9>{{list.property}}</h9>
+                            </td>
+                            <td class="">
+                              <h9>{{list.quantity}}</h9>
+                            </td>
+                          </tr>
+                          </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary" (click)="confirm(list.id)">Confirm</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Shopping Cart Section End -->
+
+<!-- Partner Logo Section Begin -->
+<div class="partner-logo">
+  <div class="container">
+    <div class="logo-carousel owl-carousel">
+      <div class="logo-item">
+        <div class="tablecell-inner">
+          <img src="../../assets/img/logo-carousel/logo-1.png" alt="">
+        </div>
+      </div>
+      <div class="logo-item">
+        <div class="tablecell-inner">
+          <img src="../../assets/img/logo-carousel/logo-2.png" alt="">
+        </div>
+      </div>
+      <div class="logo-item">
+        <div class="tablecell-inner">
+          <img src="../../assets/img/logo-carousel/logo-3.png" alt="">
+        </div>
+      </div>
+      <div class="logo-item">
+        <div class="tablecell-inner">
+          <img src="../../assets/img/logo-carousel/logo-4.png" alt="">
+        </div>
+      </div>
+      <div class="logo-item">
+        <div class="tablecell-inner">
+          <img src="../../assets/img/logo-carousel/logo-5.png" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
