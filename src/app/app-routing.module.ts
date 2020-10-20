@@ -9,6 +9,8 @@ import {ShoppingCartComponent} from './shopping-cart/shopping-cart.component';
 import {CheckoutComponent} from './checkout/checkout.component';
 import {ContactComponent} from './contact/contact.component';
 import {OrderManagementComponent} from './order-management/order-management.component';
+import {BlogComponent} from './blog/blog.component';
+import {BlogDetailComponent} from './blog-detail/blog-detail.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -20,7 +22,9 @@ const routes: Routes = [
   {path: 'shopping-cart', component: ShoppingCartComponent},
   {path: 'checkout', component: CheckoutComponent},
   {path: 'contact', component: ContactComponent},
-  {path: 'order-management', component: OrderManagementComponent}
+  {path: 'order-management', component: OrderManagementComponent},
+  {path: 'blog', component: BlogComponent},
+  {path: 'blog-detail', component: BlogDetailComponent}
 ];
 
 

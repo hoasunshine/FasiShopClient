@@ -20,6 +20,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {Ng2SearchPipeModule} from 'ng2-search-filter';
 import { ContactComponent } from './contact/contact.component';
 import { OrderManagementComponent } from './order-management/order-management.component';
+import { BlogComponent } from './blog/blog.component';
+import { BlogDetailComponent } from './blog-detail/blog-detail.component';
 
 // @ts-ignore
 @NgModule({
@@ -34,6 +36,8 @@ import { OrderManagementComponent } from './order-management/order-management.co
     CheckoutComponent,
     ContactComponent,
     OrderManagementComponent,
+    BlogComponent,
+    BlogDetailComponent,
   ],
   imports: [
     BrowserModule,

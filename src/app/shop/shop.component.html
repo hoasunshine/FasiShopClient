@@ -1,3 +1,5 @@
+
+
 <div class="breacrumb-section">
   <div class="container">
     <div class="row">
@@ -10,6 +12,68 @@
     </div>
   </div>
 </div>
+
+<section id="content" style=" height: 240px;padding-top: 30px" *ngIf="show">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="widget row "
+             style="background-image: url('../../../assets/img/banner-2.jpg'); height: 150px; border-radius: 10px; ">
+          <div class="bg-overlay" style="border-radius: 10px;"></div>
+          <div class="col-4 pl-4 pt-2">
+            <img src="123" alt=""
+                 style="border-radius:50%; width:75%; border: #737272 solid 3px; margin-left: 40px;">
+          </div>
+          <div class="col-8">
+            <div class="widget-title text-white pt-4">{{account.accountName}}<br>
+            </div>
+
+          </div>
+          <div class=" col-12 row ">
+            <div class="col-12"><a
+              href="#"
+              class="btn btn-white btn-light-hover w-100" target="_blank" style="color: white">Phone: {{account.phoneNumber}}</a></div>
+          </div>
+
+        </div>
+      </div>
+      <div class=" col-lg-8 row">
+        <div class="col-lg-6">
+          <div class="ml-5 pt-4" style="font-size: 18px;">
+            <div class="row mb-2">
+              <i class="icon-home  pr-2"></i>
+              <p>Sản phẩm : <span class="text-red">12</span></p>
+            </div>
+            <div class="row mb-2">
+              <i class="icon-user-plus  pr-2"></i>
+              <p>Đang theo dõi : <span class="text-red">12</span></p>
+            </div>
+            <div class="row mb-2">
+              <i class="icon-message-circle  pr-2"></i>
+              <p>Tỉ lệ phản hồi chat :<span class="text-red">100%</span></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class=" ml-4 pt-4" style="font-size: 18px;">
+            <div class="row mb-2">
+              <i class="icon-file-minus  pr-2"></i>
+              <p>Tỉ lệ Shop hủy đơn : <span class="text-red">0%</span></p>
+            </div>
+            <div class="row mb-2">
+              <i class="icon-user  pr-2"></i>
+              <p>Người theo dõi :<span class="text-red">12</span></p>
+            </div>
+            <div class="row mb-2">
+              <i class="icon-star  pr-2"></i>
+              <p>Đánh giá : <span class="text-red">12</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 <!-- Breadcrumb Section Begin -->
 
 <!-- Product Shop Section Begin -->
@@ -23,7 +87,7 @@
             <li><a href="javascript:void (0)" (click)="AllProduct()">All</a></li>
           </ul>
           <ul class="filter-catagories" *ngFor="let list of categories">
-            <li><a  [routerLink]="['/shop']"
+            <li><a [routerLink]="['/shop']"
                    [queryParams]="{ categoryId:list.categoryId }" (click)="reload()">{{list.categoryName}}</a></li>
           </ul>
         </div>
@@ -63,26 +127,11 @@
       <div class="col-lg-9 order-1 order-lg-2">
         <div class="product-show-option">
           <div class="row">
-            <div class="col-lg-5 col-md-5">
-              <div class="select-option">
-                <select class="sorting">
-                  <option value="">Default Sorting</option>
-                </select>
-                <select class="p-show">
-                  <option value="">Show:</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-group" style="padding-left: 70px">
+            <div class="form-group" style="padding-left: 15px">
               <input type="text" [(ngModel)]="searchText" class="form-control" id="exampleInputEmail1"
                      aria-describedby="emailHelp" placeholder="Search">
             </div>
           </div>
-        </div>
-
-        <div *ngIf="show">
-          <p>List Product Of Seller: {{account.accountName}}</p>
-          <p>Phone: {{account.phoneNumber}}</p>
         </div>
 
 

@@ -54,6 +54,7 @@ export class CheckoutComponent implements OnInit {
       alert('Please Login !!!');
       this.router.navigate(['/login']);
     } else {
+      this.shopping.email = this.email;
       this.cartInformation.accountId = JSON.parse(localStorage.getItem('currentUser')).accountId;
       this.shopping.cartInformation = this.cartInformation;
       localStorage.setItem('cartInformation', JSON.stringify(this.cartInformation));
@@ -73,7 +74,7 @@ export class CheckoutComponent implements OnInit {
           body: JSON.stringify({
             // @ts-ignore
             amount: this.price * 23000,
-            info: 'String',
+            info: 'Thanh toan Order',
             bill: 'billpayment',
             lang: 'vn',
           })
